@@ -6,6 +6,10 @@ install()
         -o DPkg::Options::=--force-confdef \
         -o DPkg::Options::=--force-confold \
         install $@
+
+    cat /etc/pagekite.d/* > /tmp/pagekite.rc
+    rm /etc/pagekite.d/*
+    mv /tmp/pagekite.rc /etc/pagekite.d/pagekite.rc
 }
 
 # installs pagekite
