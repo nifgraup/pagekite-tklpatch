@@ -1,0 +1,15 @@
+#!/bin/bash -ex
+install()
+{
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get -y \
+        -o DPkg::Options::=--force-confdef \
+        -o DPkg::Options::=--force-confold \
+        install $@
+}
+
+# installs pagekite
+install pagekite
+
+# tell the world what we've done!
+echo 'TurnKey patched with PageKite' >> /etc/issue
