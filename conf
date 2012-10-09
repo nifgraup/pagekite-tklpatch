@@ -1,4 +1,5 @@
 #!/bin/bash -ex
+
 install()
 {
     apt-get update
@@ -7,13 +8,16 @@ install()
         -o DPkg::Options::=--force-confold \
         install $@
 
-    cat /etc/pagekite.d/* > /tmp/pagekite.rc
-    rm /etc/pagekite.d/*
-    mv /tmp/pagekite.rc /etc/pagekite.d/pagekite.rc
+    # Configure PageKite to 
+    while read line
+    do
+        ( echo "$line" | grep -q -i https  && echo "https server" ) ||
+        ( echo "$line" | grep -q -i http && echo "http server" ) ||
+        ( echo "$line" | grep -q -i ssh 
+    done < /etc/confconsole/services.txt
 }
 
-# installs pagekite
 install pagekite
 
-# tell the world what we've done!
 echo 'TurnKey patched with PageKite' >> /etc/issue
+
